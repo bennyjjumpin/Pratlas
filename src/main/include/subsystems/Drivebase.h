@@ -15,4 +15,8 @@ class Drivebase
     rev::CANSparkMax dbR = rev::CANSparkMax(3,rev::CANSparkMax::MotorType::kBrushed);
     rev::CANSparkMax dbLF = rev::CANSparkMax(2,rev::CANSparkMax::MotorType::kBrushed);
     rev::CANSparkMax dbRF = rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushed);
+    rev::SparkMaxRelativeEncoder dbLEncoder = dbL.GetEncoder();
+    rev::SparkMaxRelativeEncoder dbREncoder = dbR.GetEncoder();
+    rev::SparkMaxRelativeEncoder dbLFEncoder = dbLF.GetEncoder();
+    rev::SparkMaxRelativeEncoder dbRFEncoder = dbRF.GetEncoder();
 };
