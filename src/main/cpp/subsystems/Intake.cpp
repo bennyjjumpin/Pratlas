@@ -24,12 +24,20 @@ void Intake::RobotInit()
 void Intake::RobotPeriodic()
 {
     frc::SmartDashboard::PutNumber("IntakePivotEncoderValue",intakePivotEncoder.GetPosition());
-    if (secondary.GetRawButton(1) && intakePivotEncoder.GetPosition() <= 4.571424)
+    if ((secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() <= 4.571424)
     {
+        if (secondary.GetRawButton(1))
+        {
+            intakePower = 1;
+        }
+        else
+        {
+            intakePower = -1;
+        }
         intakePivot.Set(.4);
-        intakeRoller.Set(-.4);
+        intakeRoller.Set(intakePower * -.4);
     }
-    else if (!secondary.GetRawButton(1) && intakePivotEncoder.GetPosition() >= 0)
+    else if (!(secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() >= 0)
     {
         intakePivot.Set(-.4);
         singulatorTimer = 50;
@@ -40,8 +48,7 @@ void Intake::RobotPeriodic()
     }
     if (intakePivotEncoder.GetPosition() > 1)
     {
-        
-        singulator.Set(.4);
+        singulator.Set(intakePower * .4);
     }
     else
     {
@@ -50,7 +57,7 @@ void Intake::RobotPeriodic()
     if (singulatorTimer > 0)
     {
         singulatorTimer--;
-        singulator.Set(.4);
+        singulator.Set(intakePower * .4);
     }
     else if (intakePivotEncoder.GetPosition() < 1)
     {

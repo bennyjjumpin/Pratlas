@@ -20,4 +20,5 @@ rev::CANSparkMax singulator = rev::CANSparkMax(13, rev::CANSparkMax::MotorType::
 rev::SparkMaxRelativeEncoder singulatorEncoder = singulator.GetEncoder();
 
 int singulatorTimer = 0;
+int intakePower = 1;
 };
