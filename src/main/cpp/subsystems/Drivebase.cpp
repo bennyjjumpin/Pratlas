@@ -2,61 +2,44 @@
 
 void Drivebase::RobotInit()
 {
-    dbL.RestoreFactoryDefaults();
-    dbR.RestoreFactoryDefaults();
-    dbLF.RestoreFactoryDefaults();
-    dbRF.RestoreFactoryDefaults();
-
-    dbLF.Follow(dbL);
+  dbL.ConfigFactoryDefault();
+    dbLF.ConfigFactoryDefault();
+    dbR.ConfigFactoryDefault();
+    dbRF.ConfigFactoryDefault();
+    
     dbRF.Follow(dbR);
+    dbLF.Follow(dbL);
 
     dbL.SetInverted(false);
     dbLF.SetInverted(false);
     dbR.SetInverted(true);
     dbRF.SetInverted(true);
-   
-    dbR.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    dbL.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    dbLF.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    dbRF.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-    dbL.BurnFlash();
-    dbR.BurnFlash();
-    dbLF.BurnFlash();
-    dbRF.BurnFlash();
+    dbL.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
+    dbLF.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
+    dbR.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
+    dbRF.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
 
 
 }
 
 void Drivebase::RobotPeriodic()
 {
-    if(abs(Primary.GetRawAxis(1)) >= 0.08)
+    if(abs(Primary.GetRawAxis(1)) >= 0.02)
     {
-         dbL.Set(Primary.GetRawAxis(1) * 0.5);
+         dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.35);
     }
     else
     {
-        dbL.Set(0);
-        if(abs(Primary.GetRawAxis(5)) >= 0.08)
+        dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
+        
+    }
+    if(abs(Primary.GetRawAxis(5)) >= 0.02)
         {
-           dbR.Set(Primary.GetRawAxis(5) * 0.5); 
+           dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.35);
         }
         else
         {
-            dbR.Set(0);
+            dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
         }
-    }
-}
-
-void Drivebase::DisabledInit()
-{
-    dbR.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    dbL.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    dbLF.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    dbRF.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-
-    dbL.BurnFlash();
-    dbR.BurnFlash();
-    dbLF.BurnFlash();
-    dbRF.BurnFlash();
 }

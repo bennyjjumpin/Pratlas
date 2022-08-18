@@ -2,6 +2,7 @@
 
 #include <frc/Joystick.h>
 #include <rev/CANSparkMax.h>
+#include <ctre/Phoenix.h>
 
 class Drivebase
 {
@@ -11,12 +12,8 @@ class Drivebase
     void DisabledInit();
     private:
     frc::Joystick Primary{0};
-    rev::CANSparkMax dbL = rev::CANSparkMax(1,rev::CANSparkMax::MotorType::kBrushless);
-    rev::CANSparkMax dbR = rev::CANSparkMax(3,rev::CANSparkMax::MotorType::kBrushless);
-    rev::CANSparkMax dbLF = rev::CANSparkMax(2,rev::CANSparkMax::MotorType::kBrushless);
-    rev::CANSparkMax dbRF = rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushless);
-    rev::SparkMaxRelativeEncoder dbLEncoder = dbL.GetEncoder();
-    rev::SparkMaxRelativeEncoder dbREncoder = dbR.GetEncoder();
-    rev::SparkMaxRelativeEncoder dbLFEncoder = dbLF.GetEncoder();
-    rev::SparkMaxRelativeEncoder dbRFEncoder = dbRF.GetEncoder();
+    ctre::phoenix::motorcontrol::can::TalonFX dbL{1};
+    ctre::phoenix::motorcontrol::can::TalonFX dbLF{2};
+    ctre::phoenix::motorcontrol::can::TalonFX dbR{4};
+    ctre::phoenix::motorcontrol::can::TalonFX dbRF{5};
 };
