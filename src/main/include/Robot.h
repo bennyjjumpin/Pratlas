@@ -8,6 +8,9 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include "subsystems/Intake.h"
+#include "subsystems/Drivebase.h"
+#include "subsystems/Indexer.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -29,4 +32,7 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
+  Intake intake{};
+  Drivebase drivebase{};
+  Indexer indexer{};
 };
