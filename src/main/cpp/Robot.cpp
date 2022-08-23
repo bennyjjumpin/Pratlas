@@ -28,6 +28,7 @@ void Robot::RobotPeriodic()
 {
 intake.RobotPeriodic();
 drivebase.RobotPeriodic();
+indexer.RobotPeriodic();
 }
 
 /**
