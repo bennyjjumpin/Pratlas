@@ -32,14 +32,14 @@ void Drivebase::RobotPeriodic()
 {
     if(abs(Primary.GetRawAxis(1)) >= 0.08)
     {
-         dbL.Set(Primary.GetRawAxis(1) * 0.5);
+         dbL.Set(Primary.GetRawAxis(1) * 0.75);
     }
     else
     {
         dbL.Set(0);
         if(abs(Primary.GetRawAxis(5)) >= 0.08)
         {
-           dbR.Set(Primary.GetRawAxis(5) * 0.5); 
+           dbR.Set(Primary.GetRawAxis(5) * 0.75); 
         }
         else
         {
