@@ -23,9 +23,9 @@ void Drivebase::RobotInit()
 
 }
 
-/*void Drivebase::RobotPeriodic()
+void Drivebase::RobotPeriodic()
 {
-    if(abs(Primary.GetRawAxis(1)) >= 0.02)
+   /* if(abs(Primary.GetRawAxis(1)) >= 0.02)
     {
          dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.35);
     }
@@ -42,4 +42,8 @@ void Drivebase::RobotInit()
         {
             dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
         }
-}*/
+        */
+    dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.35);
+    dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.35);
+    
+}
