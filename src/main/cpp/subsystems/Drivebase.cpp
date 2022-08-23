@@ -23,7 +23,7 @@ void Drivebase::RobotInit()
 
 }
 
-void Drivebase::RobotPeriodic()
+/*void Drivebase::RobotPeriodic()
 {
     if(abs(Primary.GetRawAxis(1)) >= 0.02)
     {
@@ -42,4 +42,4 @@ void Drivebase::RobotPeriodic()
         {
             dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
         }
-}
+}*/
