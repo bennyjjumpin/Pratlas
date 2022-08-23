@@ -23,44 +23,65 @@ void Intake::RobotInit()
 
 void Intake::RobotPeriodic()
 {
-    frc::SmartDashboard::PutNumber("IntakePivotEncoderValue",intakePivotEncoder.GetPosition());
-    if ((secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() <= 4.571424)
+    if (zeroed)
     {
-        if (secondary.GetRawButton(1))
+        frc::SmartDashboard::PutNumber("IntakePivotEncoderValue",intakePivotEncoder.GetPosition());
+        frc::SmartDashboard::PutNumber("intakePivotAbsoluteEncode",intakePivotAbsoluteEncoder.GetOutput());
+        frc::SmartDashboard::PutNumber("singulatorTimer",singulatorTimer);
+        frc::SmartDashboard::PutBoolean("stuff",!(secondary.GetRawButton(1) || secondary.GetRawButton(2)));
+        if ((secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() <= 4.571424)
         {
-            intakePower = 1;
+            if (secondary.GetRawButton(1))
+            {
+                intakePower = 1;
+            }
+            else
+            {
+                intakePower = -1;
+            }
+            intakePivot.Set(.4);
+            intakeRoller.Set(intakePower * -.4);
+            
+        }
+        else if (!(secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() >= 0)
+        {
+
+            intakePivot.Set(-.4);
+            if (intakePivotEncoder.GetPosition() >= 0.1)
+            {
+                singulatorTimer = 50; 
+            }
+        }
+        else 
+        {
+            intakePivot.Set(0);
+        }
+        if (intakePivotEncoder.GetPosition() > 1)
+        {
+            singulator.Set(intakePower * .4);
         }
         else
         {
-            intakePower = -1;
+            intakeRoller.Set(0);
         }
-        intakePivot.Set(.4);
-        intakeRoller.Set(intakePower * -.4);
+        if (singulatorTimer > 0)
+        {
+            singulatorTimer--;
+            singulator.Set(intakePower * .4);
+        }
+        else if (intakePivotEncoder.GetPosition() < 1)
+        {
+            singulator.Set(0);
+        }
     }
-    else if (!(secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() >= 0)
+    else if (intakePivotAbsoluteEncoder.GetOutput() < 0.615 && !zeroed)
     {
         intakePivot.Set(-.4);
-        singulatorTimer = 50;
     }
     else 
     {
+        zeroed = true;
         intakePivot.Set(0);
-    }
-    if (intakePivotEncoder.GetPosition() > 1)
-    {
-        singulator.Set(intakePower * .4);
-    }
-    else
-    {
-        intakeRoller.Set(0);
-    }
-    if (singulatorTimer > 0)
-    {
-        singulatorTimer--;
-        singulator.Set(intakePower * .4);
-    }
-    else if (intakePivotEncoder.GetPosition() < 1)
-    {
-        singulator.Set(0);
+        intakePivotEncoder.SetPosition(0);
     }
 }
