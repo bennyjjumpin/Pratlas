@@ -15,15 +15,15 @@ void Drivebase::RobotInit()
     dbR.SetInverted(true);
     dbRF.SetInverted(true);
 
-    dbL.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
-    dbLF.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
-    dbR.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
-    dbRF.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
+    dbL.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+    dbLF.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+    dbR.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+    dbRF.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
 
 
 }
 
-/*void Drivebase::RobotPeriodic()
+void Drivebase::RobotPeriodic()
 {
     if(abs(Primary.GetRawAxis(1)) >= 0.02)
     {
@@ -42,4 +42,4 @@ void Drivebase::RobotInit()
         {
             dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
         }
-}*/
+}

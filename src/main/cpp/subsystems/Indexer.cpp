@@ -13,7 +13,7 @@ void Indexer::RobotPeriodic()
         }
         else
         {
-            indexerZone1.Set(0.369);
+            indexerZone1.Set(0.5);
         }
         
         if(topBeamBreak.Get() == false)

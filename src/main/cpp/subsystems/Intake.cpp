@@ -7,6 +7,7 @@ void Intake::RobotInit()
     intakePivot.RestoreFactoryDefaults();
     intakePivot.SetInverted(false);
     intakePivot.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    pivotPIDController.SetP(0.15,0);
     intakePivot.BurnFlash();
     intakePivotEncoder.SetPosition(0);
     intakeRoller.RestoreFactoryDefaults();
@@ -19,48 +20,44 @@ void Intake::RobotInit()
     singulator.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     singulator.BurnFlash();
     singulatorEncoder.SetPosition(0);
+    
+    //pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
 }
 
 void Intake::RobotPeriodic()
 {
-    frc::SmartDashboard::PutNumber("IntakePivotEncoderValue",intakePivotEncoder.GetPosition());
-    if ((secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() <= 4.571424)
+    if (zeroed)
     {
-        if (secondary.GetRawButton(1))
+        frc::SmartDashboard::PutNumber("abs", intakePivotAbsoluteEncoder.GetOutput());
+        if (singulatorTimer > 0)
         {
-            intakePower = 1;
+            singulatorTimer--;
+            singulator.Set(0.4);
         }
         else
         {
-            intakePower = -1;
+            singulator.Set(0);
         }
-        intakePivot.Set(.4);
-        intakeRoller.Set(intakePower * -.4);
+        if (secondary.GetRawButton(1))
+        {
+            pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
+            intakeRoller.Set(-0.5);
+            singulator.Set(0.6);
+        }
+        else
+        {
+            pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+            intakeRoller.Set(0);
+        }
     }
-    else if (!(secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() >= 0)
+    else if (intakePivotAbsoluteEncoder.GetOutput() < 0.615 && !zeroed)
     {
         intakePivot.Set(-.4);
-        singulatorTimer = 50;
     }
     else 
     {
+        zeroed = true;
         intakePivot.Set(0);
-    }
-    if (intakePivotEncoder.GetPosition() > 1)
-    {
-        singulator.Set(intakePower * .4);
-    }
-    else
-    {
-        intakeRoller.Set(0);
-    }
-    if (singulatorTimer > 0)
-    {
-        singulatorTimer--;
-        singulator.Set(intakePower * .4);
-    }
-    else if (intakePivotEncoder.GetPosition() < 1)
-    {
-        singulator.Set(0);
+        intakePivotEncoder.SetPosition(0);
     }
 }

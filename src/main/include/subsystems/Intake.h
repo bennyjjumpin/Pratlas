@@ -1,6 +1,10 @@
 #pragma once
 #include <frc/Joystick.h>
 #include <rev/CANSparkMax.h>
+#include <frc/DigitalInput.h>
+#include <frc/DutyCycle.h>
+#include <frc/DigitalSource.h>
+#include <rev/SparkMaxPIDController.h>
 
 class Intake
 {
@@ -19,6 +23,12 @@ rev::SparkMaxRelativeEncoder intakeRollerEncoder = intakeRoller.GetEncoder();
 rev::CANSparkMax singulator = rev::CANSparkMax(13, rev::CANSparkMax::MotorType::kBrushless);
 rev::SparkMaxRelativeEncoder singulatorEncoder = singulator.GetEncoder();
 
+frc::DigitalInput absoluteEncoderDigitalInput{8};
+frc::DutyCycle intakePivotAbsoluteEncoder = frc::DutyCycle{absoluteEncoderDigitalInput};
+
+rev::SparkMaxPIDController pivotPIDController = intakePivot.GetPIDController();
+
 int singulatorTimer = 0;
 int intakePower = 1;
+bool zeroed = false;
 };
