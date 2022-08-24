@@ -11,6 +11,7 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Drivebase.h"
 #include "subsystems/Indexer.h"
+#include "subsystems/Climb.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -35,4 +36,5 @@ class Robot : public frc::TimedRobot {
   Intake intake{};
   Drivebase drivebase{};
   Indexer indexer{};
+  Climb climb{};
 };
