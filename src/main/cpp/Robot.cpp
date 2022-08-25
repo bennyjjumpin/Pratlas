@@ -14,6 +14,7 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   intake.RobotInit();
   drivebase.RobotInit();
+  climb.RobotInit();
 }
 
 /**
