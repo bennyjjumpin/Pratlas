@@ -25,7 +25,7 @@ void Drivebase::RobotInit()
 
 void Drivebase::RobotPeriodic()
 {
-    if(abs(Primary.GetRawAxis(1)) >= 0.02)
+    /*if(abs(Primary.GetRawAxis(1)) >= 0.02)
     {
          dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.35);
     }
@@ -41,5 +41,7 @@ void Drivebase::RobotPeriodic()
         else
         {
             dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
-        }
+        }*/
+    dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.35);
+    dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.35);
 }

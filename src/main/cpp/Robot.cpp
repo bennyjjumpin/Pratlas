@@ -15,6 +15,8 @@ void Robot::RobotInit() {
   intake.RobotInit();
   drivebase.RobotInit();
   climb.RobotInit();
+  shooter.RobotInit();
+  indexer.RobotInit();
 }
 
 /**
@@ -31,6 +33,7 @@ intake.RobotPeriodic();
 drivebase.RobotPeriodic();
 indexer.RobotPeriodic();
 climb.RobotPeriodic();
+shooter.RobotPeriodic();
 }
 
 /**
