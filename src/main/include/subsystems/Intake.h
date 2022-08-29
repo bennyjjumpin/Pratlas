@@ -4,6 +4,7 @@
 #include <frc/DigitalInput.h>
 #include <frc/DutyCycle.h>
 #include <frc/DigitalSource.h>
+#include <rev/SparkMaxPIDController.h>
 
 class Intake
 {
@@ -24,6 +25,8 @@ rev::SparkMaxRelativeEncoder singulatorEncoder = singulator.GetEncoder();
 
 frc::DigitalInput absoluteEncoderDigitalInput{8};
 frc::DutyCycle intakePivotAbsoluteEncoder = frc::DutyCycle{absoluteEncoderDigitalInput};
+
+rev::SparkMaxPIDController pivotPIDController = intakePivot.GetPIDController();
 
 int singulatorTimer = 0;
 int intakePower = 1;

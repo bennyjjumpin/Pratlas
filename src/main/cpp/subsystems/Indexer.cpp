@@ -1,6 +1,11 @@
 #include <subsystems/Indexer.h>
 #include <frc/smartDashboard/smartDashboard.h>
 
+void Indexer::RobotInit()
+{
+    indexerZone2.SetInverted(true);
+}
+
 void Indexer::RobotPeriodic()
 {
     frc::SmartDashboard::PutBoolean("Top", topBeamBreak.Get());
@@ -13,7 +18,7 @@ void Indexer::RobotPeriodic()
         }
         else
         {
-            indexerZone1.Set(0.369);
+            indexerZone1.Set(0.5);
         }
         
         if(topBeamBreak.Get() == false)
@@ -22,18 +27,22 @@ void Indexer::RobotPeriodic()
         }
         else
         {
-            indexerZone2.Set(-0.3);
+            indexerZone2.Set(0.3);
         }
     }
     else if(secondary.GetRawButton(2))
     {
         indexerZone1.Set(-0.369);
-        indexerZone2.Set(0.3);
+        indexerZone2.Set(-0.3);
     }
     else
     {
         indexerZone1.Set(0);
         indexerZone2.Set(0);
+    }
+    if (secondary.GetRawButton(3))
+    {
+        indexerZone2.Set(0.75);
     }
 }
 
