@@ -28,8 +28,8 @@ void Intake::RobotPeriodic()
 {
     if (zeroed)
     {
-        frc::SmartDashboard::PutNumber("abs", intakePivotAbsoluteEncoder.GetOutput());
-        if (singulatorTimer > 0)
+        frc::SmartDashboard::PutNumber("intakePivotPosition", intakePivotAbsoluteEncoder.GetOutput());
+        if (singulatorTimer > 0) // Makes the singulator run a little after the intake is deactivated.
         {
             singulatorTimer--;
             singulator.Set(0.4);
@@ -38,7 +38,7 @@ void Intake::RobotPeriodic()
         {
             singulator.Set(0);
         }
-        if (secondary.GetRawButton(1))
+        if (secondary.GetRawButton(1)) // if button 1 is pressed it will activate all necessary motors for the intake.
         {
             pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
             intakeRoller.Set(-0.5);
@@ -65,6 +65,18 @@ void Intake::RobotPeriodic()
         {
             pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
             intakeRoller.Set(0);
+        }
+        if (secondary.GetRawButton(1)) // if button 2 is pressed it will activate all necessary motors for the outtake.
+        {
+            pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
+            intakeRoller.Set(0.5);
+            singulator.Set(-0.6);
+        }
+        else
+        {
+            pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+            intakeRoller.Set(0);
+            singulator.Set(0);
         }
     }
     else if (intakePivotAbsoluteEncoder.GetOutput() < 0.615 && !zeroed)
