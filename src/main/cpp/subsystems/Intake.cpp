@@ -28,7 +28,7 @@ void Intake::RobotPeriodic()
 {
     if (zeroed)
     {
-        frc::SmartDashboard::PutNumber("abs", intakePivotAbsoluteEncoder.GetOutput());
+        frc::SmartDashboard::PutNumber("intakePivotPosition", intakePivotAbsoluteEncoder.GetOutput());
         if (singulatorTimer > 0)
         {
             singulatorTimer--;
