@@ -12,15 +12,15 @@ void Shooter::RobotInit()
 // ShooterHoodPIDValue: 0.16
 void Shooter::RobotPeriodic()
 {
-     frc::SmartDashboard::PutNumber("shooterHoodPenis", hoodEncoder.GetPosition());
+    frc::SmartDashboard::PutNumber("shooterHoodPosition", hoodEncoder.GetPosition());
     if(secondary.GetRawButtonPressed(4))
     {
-        flywheelToggle = !flywheelToggle;
+        flywheelToggle = !flywheelToggle; // A toggle for ther fly wheel to prevent from holding down the button
     }
     if(flywheelToggle == true)
     {
         shooterFlywheel.Set(0.5);
-        shooterHoodPIDController.SetReference(-10,rev::CANSparkMax::ControlType::kPosition,0);
+        shooterHoodPIDController.SetReference(-10,rev::CANSparkMax::ControlType::kPosition,0); // Sets the shooter hood to a certain position when the flywheel is toggled.
     }
 
     else
