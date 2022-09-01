@@ -6,7 +6,7 @@ void Indexer::RobotInit()
     indexerZone2.SetInverted(true); // Makes the beam break value default to false.
 }
 
-void Indexer::RobotPeriodic()
+void Indexer::RobotPeriodic(bool shooterReady)
 {
     frc::SmartDashboard::PutBoolean("Top", topBeamBreak.Get()); // Adds the boolean values to smart dashboard.
     frc::SmartDashboard::PutBoolean("Mid", midBeamBreak.Get());
@@ -40,9 +40,14 @@ void Indexer::RobotPeriodic()
         indexerZone1.Set(0);
         indexerZone2.Set(0);
     }
-    if (secondary.GetRawButton(3)) // An extra button for putting ther ball in the shooter zone by setting the indexer zone 2 motor.
+    if(shooterReady == true)
     {
-        indexerZone2.Set(0.75);
+        indexerZone2.Set(0.5);
     }
+    else
+    {
+        indexerZone2.Set(0);
+    }
+
 }
 
