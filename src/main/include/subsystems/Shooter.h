@@ -13,6 +13,7 @@ class Shooter
     public:
     void RobotInit();
     void RobotPeriodic();
+    bool shooterReady;
     private:
     frc::Joystick secondary{1};
     rev::CANSparkMax shooterFlywheel = rev::CANSparkMax(31, rev::CANSparkMax::MotorType::kBrushless);
@@ -22,4 +23,6 @@ class Shooter
     bool flywheelToggle;
     rev::SparkMaxPIDController shooterHoodPIDController = shooterHood.GetPIDController();
     rev::SparkMaxRelativeEncoder hoodEncoder = shooterHood.GetEncoder();
+    rev::SparkMaxPIDController flywheelPIDController = shooterFlywheel.GetPIDController();
+    rev::SparkMaxRelativeEncoder flywheelEncoder = shooterFlywheel.GetEncoder();
 };
