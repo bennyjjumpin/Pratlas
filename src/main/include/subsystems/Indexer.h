@@ -16,5 +16,4 @@ class Indexer
     frc::DigitalInput midBeamBreak{9};
     frc::DigitalInput topBeamBreak{5};
     frc::Joystick secondary{1};
-
 };

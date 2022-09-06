@@ -17,6 +17,7 @@ class Shooter
     private:
     frc::Joystick secondary{1};
     rev::CANSparkMax shooterFlywheel = rev::CANSparkMax(31, rev::CANSparkMax::MotorType::kBrushless);
+    rev::CANSparkMax shooterLipRoller = rev::CANSparkMax(32, rev::CANSparkMax::MotorType::kBrushless);
     rev::CANSparkMax shooterHood = rev::CANSparkMax(33, rev::CANSparkMax::MotorType::kBrushless);
     frc::DigitalInput absoluteEncoderDigitalInput{1};
     frc::DutyCycle shooterHoodAbsoluteEncoder = frc::DutyCycle{absoluteEncoderDigitalInput};

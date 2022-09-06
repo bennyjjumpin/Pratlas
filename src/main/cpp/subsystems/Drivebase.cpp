@@ -42,6 +42,6 @@ void Drivebase::RobotPeriodic()
         {
             dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
         }*/
-    dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.35);
-    dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.35); // The speed is set to the axis value from 0-1 but multiplied by 0.35.
+    dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1));
+    dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5)); // The speed is set to the axis value from 0-1 but multiplied by 0.35.
 }

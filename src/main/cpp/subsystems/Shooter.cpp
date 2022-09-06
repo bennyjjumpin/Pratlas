@@ -15,11 +15,21 @@ void Shooter::RobotInit()
 // ShooterHoodPIDValue: 0.16
 void Shooter::RobotPeriodic()
 {
+    if (secondary.GetRawButton(3))
+    {
+        shooterReady = true;
+    }
+    // else
+    // {
+    //     shooterReady = false;
+    // }
+    frc::SmartDashboard::PutNumber("flywheelVelocity", flywheelEncoder.GetVelocity());
     if(secondary.GetRawButton(4))
     {
-        flywheelPIDController.SetReference(1000,rev::CANSparkMax::ControlType::kVelocity,0);
+        flywheelPIDController.SetReference(1500,rev::CANSparkMax::ControlType::kVelocity,0);
         shooterHoodPIDController.SetReference(-10,rev::CANSparkMax::ControlType::kPosition,0); // Sets the shooter hood to a certain position when the flywheel is toggled.
-        if (flywheelEncoder.GetVelocity() >= 1000 && hoodEncoder.GetPosition() <= -9.8)
+        shooterLipRoller.Set(0.3);
+        if (flywheelEncoder.GetVelocity() >= 1500 && hoodEncoder.GetPosition() <= -9.8)
         {
             shooterReady = true;
         }
@@ -27,10 +37,13 @@ void Shooter::RobotPeriodic()
         {
             shooterReady = false;
         }
+        
     }
     else
     {
         shooterFlywheel.Set(0);
         shooterHoodPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+        shooterLipRoller.Set(0);
+        //shooterReady = false;
     }
 }
