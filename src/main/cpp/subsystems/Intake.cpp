@@ -28,7 +28,7 @@ void Intake::RobotPeriodic()
 {
     if (zeroed)
     {
-        frc::SmartDashboard::PutNumber("intakePivotPosition", intakePivotAbsoluteEncoder.GetOutput());
+        frc::SmartDashboard::PutNumber("intakePivotPosition", intakePivotEncoder.GetPosition());
         if (singulatorTimer > 0) // Makes the singulator run a little after the intake is deactivated.
         {
             singulatorTimer--;
@@ -47,15 +47,11 @@ void Intake::RobotPeriodic()
         else if (!(secondary.GetRawButton(1) || secondary.GetRawButton(2)) && intakePivotEncoder.GetPosition() >= 0)
         {
 
-            intakePivot.Set(-.4);
-            if (intakePivotEncoder.GetPosition() >= 0.1)
+            pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+            if (intakePivotEncoder.GetPosition() >= 2)
             {
                 singulatorTimer = 50; 
             }
-        }
-        else 
-        {
-            intakePivot.Set(0);
         }
         if (intakePivotEncoder.GetPosition() > 1)
         {
@@ -63,21 +59,21 @@ void Intake::RobotPeriodic()
         }
         else
         {
-            pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+            //pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
             intakeRoller.Set(0);
         }
-        if (secondary.GetRawButton(1)) // if button 2 is pressed it will activate all necessary motors for the outtake.
-        {
-            pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
-            intakeRoller.Set(0.5);
-            singulator.Set(-0.6);
-        }
-        else
-        {
-            pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
-            intakeRoller.Set(0);
-            singulator.Set(0);
-        }
+        // if (secondary.GetRawButton(2)) // if button 2 is pressed it will activate all necessary motors for the outtake.
+        // {
+        //     pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
+        //     intakeRoller.Set(0.5);
+        //     singulator.Set(-0.6);
+        // }
+        // else
+        // {
+        //     pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+        //     intakeRoller.Set(0);
+        //     singulator.Set(0);
+        // }
     }
     else if (intakePivotAbsoluteEncoder.GetOutput() < 0.615 && !zeroed)
     {
@@ -89,4 +85,6 @@ void Intake::RobotPeriodic()
         intakePivot.Set(0);
         intakePivotEncoder.SetPosition(0);
     }
+    frc::SmartDashboard::PutNumber("Intake Power", intakePivot.Get());
+    frc::SmartDashboard::PutBoolean("zeroed", zeroed);
 }

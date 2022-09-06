@@ -31,7 +31,7 @@ void Robot::RobotPeriodic()
 {
 intake.RobotPeriodic();
 drivebase.RobotPeriodic();
-indexer.RobotPeriodic();
+indexer.RobotPeriodic(shooter.shooterReady);
 climb.RobotPeriodic();
 shooter.RobotPeriodic();
 }
