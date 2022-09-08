@@ -1,4 +1,5 @@
 #include "subsystems/Drivebase.h"
+#include <frc/SmartDashboard/SmartDashboard.h>
 
 void Drivebase::RobotInit()
 {
@@ -25,23 +26,29 @@ void Drivebase::RobotInit()
 
 void Drivebase::RobotPeriodic()
 {
-    /*if(abs(Primary.GetRawAxis(1)) >= 0.02)
+    frc::SmartDashboard::PutBoolean("Axis1Greaterthan0.08", Axis1Deadzone);
+    frc::SmartDashboard::PutBoolean("Axis5Greaterthan0.08", Axis5Deadzone);
+    if (Primary.GetRawAxis(1) > 0.08 || Primary.GetRawAxis(1) < -0.08)
     {
-         dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.35);
+        dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.75);
+        Axis1Deadzone = true;
     }
     else
     {
+        Axis1Deadzone = false;
         dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
-        
     }
-    if(abs(Primary.GetRawAxis(5)) >= 0.02)
-        {
-           dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.35);
-        }
-        else
-        {
-            dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
-        }*/
-    dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1));
-    dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5)); // The speed is set to the axis value from 0-1 but multiplied by 0.35.
+    if (Primary.GetRawAxis(5) > 0.08 || Primary.GetRawAxis(5) < -0.08)
+    {
+        dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.75);
+        Axis5Deadzone = true;
+    }
+    else
+    {
+        dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
+        Axis5Deadzone = false;
+    } 
+
+   // dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1));
+   // dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5)); // The speed is set to the axis value from 0-1 but multiplied by 0.35.
 }
