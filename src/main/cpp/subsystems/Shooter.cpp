@@ -1,5 +1,21 @@
 #include "subsystems/Shooter.h"
 
+void Shooter::ShootSetPoint(double HoodPos, double WheelVel, double LipRollerVel)
+{
+    flywheelPIDController.SetReference(WheelVel,rev::CANSparkMax::ControlType::kVelocity,0);
+    shooterHoodPIDController.SetReference(HoodPos,rev::CANSparkMax::ControlType::kPosition,0); // Sets the shooter hood to a certain position when the flywheel is toggled.
+    shooterLipRoller.Set(LipRollerVel);
+
+    if (flywheelEncoder.GetVelocity() >= WheelVel && hoodEncoder.GetPosition() <= (HoodPos + 0.2))
+    {
+        shooterReady = true;
+    }
+    else
+    {
+        shooterReady = false;
+    }
+}
+
 void Shooter::RobotInit()
 {
     shooterFlywheel.RestoreFactoryDefaults();
@@ -15,35 +31,32 @@ void Shooter::RobotInit()
 // ShooterHoodPIDValue: 0.16
 void Shooter::RobotPeriodic()
 {
-    if (secondary.GetRawButton(3))
-    {
-        shooterReady = true;
-    }
     // else
     // {
     //     shooterReady = false;
     // }
     frc::SmartDashboard::PutNumber("flywheelVelocity", flywheelEncoder.GetVelocity());
-    if(secondary.GetRawButton(4))
+    frc::SmartDashboard::PutNumber("hoodEncoder", hoodEncoder.GetPosition());
+
+
+    frc::SmartDashboard::PutBoolean("AJKHDKAJSD", secondary.GetRawButton(5) /*shift*/ && secondary.GetRawButton(2));
+    if (secondary.GetRawButton(5) /*shift*/ && secondary.GetRawButton(2) /*button 1*/)
     {
-        flywheelPIDController.SetReference(1500,rev::CANSparkMax::ControlType::kVelocity,0);
-        shooterHoodPIDController.SetReference(-10,rev::CANSparkMax::ControlType::kPosition,0); // Sets the shooter hood to a certain position when the flywheel is toggled.
-        shooterLipRoller.Set(0.3);
-        if (flywheelEncoder.GetVelocity() >= 1500 && hoodEncoder.GetPosition() <= -9.8)
-        {
-            shooterReady = true;
-        }
-        else
-        {
-            shooterReady = false;
-        }
-        
+        ShootSetPoint(-16, 1800, -0.2);
+    }
+    else if (secondary.GetRawButton(5) /*shift*/ && secondary.GetRawButton(1) /*button 2*/)
+    {
+        ShootSetPoint(0, 1700, -0.2);
+    }
+    else if (secondary.GetRawButton(5) /*shift*/ && secondary.GetRawButton(3) /*button 3*/)
+    {
+        ShootSetPoint(-18, 3000, -0.2);
     }
     else
     {
         shooterFlywheel.Set(0);
         shooterHoodPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
         shooterLipRoller.Set(0);
-        //shooterReady = false;
+        shooterReady = false;
     }
 }

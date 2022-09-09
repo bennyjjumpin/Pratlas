@@ -14,7 +14,7 @@ void Indexer::RobotPeriodic(bool shooterReady)
     frc::SmartDashboard::PutBoolean("Top", topBeamBreak.Get()); // Adds the boolean values to smart dashboard.
     frc::SmartDashboard::PutBoolean("Mid", midBeamBreak.Get());
     frc::SmartDashboard::PutBoolean("shooterReady", shooterReady);
-    if(secondary.GetRawButton(1))
+    if(secondary.GetRawButton(1) && !secondary.GetRawButton(5))
     {
         if(midBeamBreak.Get() == false && topBeamBreak.Get() == false) //When pressing intake button, it sets the indexer zone 1 motor until one of the beam breaks is set to true.
         {
@@ -34,7 +34,7 @@ void Indexer::RobotPeriodic(bool shooterReady)
             indexerZone2.Set(0.3);
         }
     }
-    else if(secondary.GetRawButton(2)) // Sets both indexer zones to outake when button 2 is pressed.
+    else if(secondary.GetRawButton(2) && !secondary.GetRawButton(5)) // Sets both indexer zones to outake when button 2 is pressed.
     {
         indexerZone1.Set(-0.369);
         indexerZone2.Set(-0.3);

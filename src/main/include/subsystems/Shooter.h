@@ -14,6 +14,7 @@ class Shooter
     void RobotInit();
     void RobotPeriodic();
     bool shooterReady;
+    void ShootSetPoint(double HoodPos, double WheelVel, double LipRollerVel);
     private:
     frc::Joystick secondary{1};
     rev::CANSparkMax shooterFlywheel = rev::CANSparkMax(31, rev::CANSparkMax::MotorType::kBrushless);
