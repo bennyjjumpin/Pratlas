@@ -16,4 +16,6 @@ class Drivebase
     ctre::phoenix::motorcontrol::can::TalonFX dbLF{2};
     ctre::phoenix::motorcontrol::can::TalonFX dbR{4};
     ctre::phoenix::motorcontrol::can::TalonFX dbRF{5};
+    bool Axis1Deadzone;
+    bool Axis5Deadzone;
 };
