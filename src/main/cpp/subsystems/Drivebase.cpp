@@ -30,7 +30,7 @@ void Drivebase::RobotPeriodic()
     frc::SmartDashboard::PutBoolean("Axis5Greaterthan0.08", Axis5Deadzone);
     if (Primary.GetRawAxis(1) > 0.08 || Primary.GetRawAxis(1) < -0.08)
     {
-        dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.75);
+        dbL.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(1) * 0.5);
         Axis1Deadzone = true;
     }
     else
@@ -40,7 +40,7 @@ void Drivebase::RobotPeriodic()
     }
     if (Primary.GetRawAxis(5) > 0.08 || Primary.GetRawAxis(5) < -0.08)
     {
-        dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.75);
+        dbR.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, Primary.GetRawAxis(5) * 0.5);
         Axis5Deadzone = true;
     }
     else

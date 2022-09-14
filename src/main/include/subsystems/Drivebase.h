@@ -11,7 +11,7 @@ class Drivebase
     void RobotPeriodic();
     void DisabledInit();
     private:
-    frc::Joystick Primary{0};
+    frc::Joystick Primary{1};
     ctre::phoenix::motorcontrol::can::TalonFX dbL{1};
     ctre::phoenix::motorcontrol::can::TalonFX dbLF{2};
     ctre::phoenix::motorcontrol::can::TalonFX dbR{4};

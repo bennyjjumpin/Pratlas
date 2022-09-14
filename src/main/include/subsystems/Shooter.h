@@ -27,4 +27,13 @@ class Shooter
     rev::SparkMaxRelativeEncoder hoodEncoder = shooterHood.GetEncoder();
     rev::SparkMaxPIDController flywheelPIDController = shooterFlywheel.GetPIDController();
     rev::SparkMaxRelativeEncoder flywheelEncoder = shooterFlywheel.GetEncoder();
+    enum ShooterState
+    {
+        WALLSHOT,
+        FENDERSHOT,
+        LAUNCHPADSHOT,
+        IDLEMODE
+    };
+    
+    ShooterState shooterState = IDLEMODE;
 };
