@@ -42,38 +42,35 @@ void Intake::RobotPeriodic()
         {
             pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
             intakeRoller.Set(-0.5);
-            singulator.Set(0.6);
+        }
+        else if (secondary.GetRawButton(1) && !secondary.GetRawButton(5)) // if button 2 is pressed it will activate all necessary motors for the outtake.
+        {
+            pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
+            intakeRoller.Set(0.5);
+            singulator.Set(-0.6);
         }
         else if (!(secondary.GetRawAxis(3) > 0.1 || secondary.GetRawButton(1)) && intakePivotEncoder.GetPosition() >= 0 && !secondary.GetRawButton(5))
         {
 
             pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+            intakeRoller.Set(0);
             if (intakePivotEncoder.GetPosition() >= 2)
             {
                 singulatorTimer = 50; 
             }
         }
+        else
+        {
+            pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
+            intakeRoller.Set(0);
+        }
+        
         if (intakePivotEncoder.GetPosition() > 1)
         {
             singulator.Set(intakePower * .4);
         }
-        else
-        {
-            //pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
-            intakeRoller.Set(0);
-        }
-        // if (secondary.GetRawButton(1)) // if button 2 is pressed it will activate all necessary motors for the outtake.
-        // {
-        //     pivotPIDController.SetReference(5.5,rev::CANSparkMax::ControlType::kPosition,0);
-        //     intakeRoller.Set(0.5);
-        //     singulator.Set(-0.6);
-        // }
-        // else
-        // {
-        //     pivotPIDController.SetReference(0,rev::CANSparkMax::ControlType::kPosition,0);
-        //     intakeRoller.Set(0);
-        //     singulator.Set(0);
-        // }
+        
+        
     }
     else if (intakePivotAbsoluteEncoder.GetOutput() < 0.615 && !zeroed)
     {

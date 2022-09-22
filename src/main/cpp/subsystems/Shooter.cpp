@@ -86,15 +86,15 @@ void Shooter::RobotPeriodic()
     {
         if(shooterState == LAUNCHPADSHOT)
         {
-            ShootSetPoint(-17.5, 2100, -0.3); //Launch Pad
+            ShootSetPoint(-17.5, 1800, 0.8); //Launch Pad
         }
         else if (shooterState == FENDERSHOT)
         {
-            ShootSetPoint(0, 1600, -0.2); //Fender
+            ShootSetPoint(0, 1600, 0.2); //Fender
         }
         else if (shooterState == WALLSHOT)
         {
-            ShootSetPoint(-14, 1850, -0.2); //Wall
+            ShootSetPoint(-14, 1500, 0.5); //Wall
         }
     }
     else
